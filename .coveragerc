@@ -1,0 +1,6 @@
+[run]
+branch = True
+omit =
+    auth/jwt.py
+    database/db.py
+    database/test_db.py
