@@ -4,12 +4,22 @@ from auth.schemas import TokenData
 from users import models as user_models
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
+import random
 
 
 async def get_posts(id: int, database: Session):
     """Get posts by query params id"""
 
     return database.query(models.Posts).join(user_models.Users).filter(models.Posts.author == id).all()
+
+
+async def get_all_posts(database: Session):
+    """Get all posts"""
+
+    _posts = database.query(models.Posts).join(user_models.Users).all()
+
+    random.shuffle(_posts)
+    return _posts
 
 
 async def create_post(post: schemas.Post, database: Session, author_id: int):

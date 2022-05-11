@@ -17,9 +17,16 @@ router = APIRouter(tags=["posts"], prefix="/api/v1/posts")
 
 
 @router.get("/", response_model=List[schemas.OutPosts])
-async def get_all_posts(q: int = Query(..., description="Posts by user id"), database: Session = Depends(get_db)):
+async def get_all_posts(user: int = None, database: Session = Depends(get_db)):
+    """Get all posts
 
-    posts = await services.get_posts(q, database)
+    return List[Posts] by user id or list[shuffle(Posts)]
+    """
+
+    if not user:
+        posts = await services.get_all_posts(database)
+    else:
+        posts = await services.get_posts(user, database)
 
     if not posts:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Posts not found")
