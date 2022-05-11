@@ -1,6 +1,5 @@
 from sqlalchemy.orm import Session
 from . import models
-from fastapi import HTTPException, status
 
 
 async def get_all_users(database: Session):

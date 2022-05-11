@@ -30,7 +30,7 @@ class TestPosts:
             assert response.status_code == 404
 
             response = await ac.post(
-                f"api/v1/posts/",
+                "api/v1/posts/",
                 headers={"Authorization": f"Bearer {self.user_access_token_2}"},
                 json={"title": "Test", "text": "Text text"},
             )
@@ -39,33 +39,32 @@ class TestPosts:
             response = await ac.get(
                 f"api/v1/posts/?user={self.new_user.id}",
             )
-            print(response.json())
             assert response.status_code == 200
 
             response = await ac.get(
-                f"api/v1/posts/",
+                "api/v1/posts/",
             )
             assert response.status_code == 200
 
             await ac.get(
-                f"api/v1/posts/2/",
+                "api/v1/posts/3/",
             )
             assert response.status_code == 200
 
             response = await ac.delete(
-                f"api/v1/posts/2/",
+                "api/v1/posts/3/",
                 headers={"Authorization": f"Bearer {self.user_access_token}"},
             )
             assert response.status_code == 400
 
             response = await ac.delete(
-                f"api/v1/posts/2/",
+                "api/v1/posts/3/",
                 headers={"Authorization": f"Bearer {self.user_access_token_2}"},
             )
             assert response.status_code == 200
 
             response = await ac.delete(
-                f"api/v1/posts/2/",
+                "api/v1/posts/3/",
                 headers={"Authorization": f"Bearer {self.user_access_token_2}"},
             )
             assert response.status_code == 404
@@ -74,6 +73,6 @@ class TestPosts:
     async def test_get_by_id_bad(self):
         async with self.client as ac:
             response = await ac.get(
-                f"api/v1/posts/200/",
+                "api/v1/posts/200/",
             )
             assert response.status_code == 404

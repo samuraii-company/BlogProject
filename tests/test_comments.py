@@ -34,14 +34,14 @@ class TestComments:
             assert response.status_code == 404
 
             response = await ac.post(
-                f"api/v1/comments/",
+                "api/v1/comments/",
                 headers={"Authorization": f"Bearer {self.user_access_token_2}"},
                 json={"text": "Test Comment", "post": self.post.id},
             )
             assert response.status_code == 201
 
             response = await ac.post(
-                f"api/v1/comments/",
+                "api/v1/comments/",
                 headers={"Authorization": f"Bearer {self.user_access_token_2}"},
                 json={"text": "Test Comment", "post": self.bad_id},
             )
@@ -58,19 +58,19 @@ class TestComments:
             assert response.status_code == 404
 
             response = await ac.delete(
-                f"api/v1/comments/2/",
+                "api/v1/comments/1/",
                 headers={"Authorization": f"Bearer {self.user_access_token}"},
             )
             assert response.status_code == 400
 
             response = await ac.delete(
-                f"api/v1/comments/2/",
+                "api/v1/comments/1/",
                 headers={"Authorization": f"Bearer {self.user_access_token_2}"},
             )
             assert response.status_code == 200
 
             response = await ac.delete(
-                f"api/v1/comments/2/",
+                "api/v1/comments/1/",
                 headers={"Authorization": f"Bearer {self.user_access_token_2}"},
             )
             assert response.status_code == 404

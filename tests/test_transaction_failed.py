@@ -1,4 +1,3 @@
-from fastapi import Depends
 import pytest
 
 from database.test_db import override_get_db
@@ -13,4 +12,4 @@ class TestCommentTransaction:
         with pytest.raises(Exception):
             database = next(override_get_db())
             comment = Comment(text="Test", post=12)
-            response = await create_comment(comment, database, 12)
+            await create_comment(comment, database, 12)
